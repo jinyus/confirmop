@@ -10,7 +10,9 @@
 ```
  example:
 
- userChoice := ConfirmOperation("Do you want to delete this file","proceed",true)
+ import cop "github.com/jinyus/confirmop"
+
+ userChoice := cop.ConfirmOperation("Do you want to delete this file","proceed",true)
 
  // The user will see this prompt:
  //   Do you want to delete this file
