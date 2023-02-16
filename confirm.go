@@ -16,10 +16,11 @@ import (
 //
 // example:
 // userChoice := ConfirmOperation("Do you want to delete this file","proceed",true)
-// if userChoice{
-// 	//Safe to delete the file
-// }
-func ConfirmOperation(desc, confirmText string, retry bool) bool {
+//
+//	if userChoice{
+//		//Safe to delete the file
+//	}
+func ConfirmOperation(desc, confirmText string, retry bool, defaultChoice bool) bool {
 	var answer string
 	if confirmText == "" {
 		confirmText = "confirm"
@@ -38,12 +39,16 @@ func ConfirmOperation(desc, confirmText string, retry bool) bool {
 		}
 
 		if _, err := fmt.Scanf("%s", &answer); err != nil {
+			if err.Error() == "unexpected newline" {
+				return defaultChoice
+			}
 			fmt.Printf("invalid answer : expected (y or n) got (%s) :\n%v", answer, err)
 			if !retry {
 				return false
 			}
 			continue
 		}
+		fmt.Println("answer:", answer)
 		answer = strings.TrimSpace(answer)
 		answer = strings.ToLower(answer)
 
