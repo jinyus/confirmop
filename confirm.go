@@ -42,7 +42,7 @@ func ConfirmOperation(desc, confirmText string, retry bool, defaultChoice bool) 
 			if err.Error() == "unexpected newline" {
 				return defaultChoice
 			}
-			fmt.Printf("invalid answer : expected (y or n) got (%s) :\n%v", answer, err)
+			fmt.Printf("invalid answer : expected (y or n) got (%s) :\n%v\n", answer, err)
 			if !retry {
 				return false
 			}
