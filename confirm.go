@@ -29,12 +29,19 @@ func ConfirmOperation(desc, confirmText string, retry bool, defaultChoice bool) 
 	// this is to ensure that user is prompted at least once
 	var tries int
 
+	yn := "y/N"
+
+	if defaultChoice {
+		yn = "Y/n"
+	}
+
 	for retry || tries == 0 {
 		tries++
+
 		if desc == "" {
-			fmt.Printf("%s? (y/n): ", confirmText)
+			fmt.Printf("%s? [%s]: ", confirmText, yn)
 		} else {
-			fmt.Printf("%s \n%s? (y/n): ", desc, confirmText)
+			fmt.Printf("%s \n%s? [%s]: ", desc, confirmText, yn)
 
 		}
 
@@ -42,13 +49,8 @@ func ConfirmOperation(desc, confirmText string, retry bool, defaultChoice bool) 
 			if err.Error() == "unexpected newline" {
 				return defaultChoice
 			}
-			fmt.Printf("invalid answer : expected (y or n) got (%s) :\n%v\n", answer, err)
-			if !retry {
-				return false
-			}
-			continue
 		}
-		fmt.Println("answer:", answer)
+
 		answer = strings.TrimSpace(answer)
 		answer = strings.ToLower(answer)
 
